@@ -19,15 +19,15 @@ public:
 	void addNode();
 	bool search(int rollno, Node** wardah, Node** nadhira);
 	bool listEmpty();
-	bool delNode();
+	bool delNode(int rollno);
 	void traverse();
 };
 
 void CircularLinkedList::addNode() {
-	int nim;
+	int rollno;
 	string nama;
 	cout << "\nEnter the roll number of the student: ";
-	cin >> nim;
+	cin >> rollno;
 	cout << "\nEnter the name of the student: ";
 	cin >> nama;
 	Node* newNode = new Node();
@@ -35,8 +35,8 @@ void CircularLinkedList::addNode() {
 	newNode->name = nama;
 	
 
-	if (LAST == NULL || nim <= LAST->next){
-		if (LAST != NULL && nim == LAST->rollNumber)
+	if (LAST == NULL || rollno <= LAST->rollNumber){
+		if (LAST != NULL && rollno == LAST->rollNumber)
 		{
 			cout << "\nDuplicate number not allowed" << endl;
 			return 0;
@@ -51,13 +51,13 @@ void CircularLinkedList::addNode() {
 
 	Node* nadhira = LAST;
 	Node* wardah = NULL;
-	while (nadhira->next != NULL && nadhira->next->rollNumber < nim)
+	while (nadhira->next != NULL && nadhira->next->rollNumber < rollno)
 	{
 		wardah = nadhira;
 		nadhira = nadhira->next;
 	}
 
-	if (nadhira->next != NULL && nim == nadhira->next->rollNumber) {
+	if (nadhira->next != NULL && rollno == nadhira->next->rollNumber) {
 		cout << "\nDuplicate roll numbers not allowed" << endl;
 		return;
 	}
@@ -74,7 +74,7 @@ bool CircularLinkedList::search(int rollno, Node** wardah, Node** nadhira) {
 	*nadhira = LAST->next;
 
 	while (*nadhira != LAST) {
-		if (rollno == (*nadhira)->rollno) {
+		if (rollno == (*nadhira)->rollNumber) {
 			return true;
 		}
 		*wardah = *nadhira;
@@ -93,10 +93,10 @@ bool CircularLinkedList::listEmpty() {
 	return LAST == NULL;
 }
 
-bool CircularLinkedList::delNode() {
+bool CircularLinkedList::delNode(int rollno) {
 	Node* wardah, * nadhira;
 	wardah = nadhira = NULL;
-	if (search(rollno, &wardah, &nadhira) == false)
+	if (search(rollno), &wardah, &nadhira) == false)
 		return false;
 	if (nadhira->next != NULL)
 		nadhira->next = wardah;
